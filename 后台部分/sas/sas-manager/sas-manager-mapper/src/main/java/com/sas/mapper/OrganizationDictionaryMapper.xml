@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sas.mapper.OrganizationDictionaryMapper" >
+  <resultMap id="BaseResultMap" type="com.sas.pojo.OrganizationDictionary" >
+    <id column="OrganizationId" property="organizationid" jdbcType="INTEGER" />
+    <result column="OrganizationName" property="organizationname" jdbcType="VARCHAR" />
+    <result column="ParentId" property="parentid" jdbcType="INTEGER" />
+    <result column="CreateBy" property="createby" jdbcType="VARCHAR" />
+    <result column="CreateDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="ModifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="ModifyBy" property="modifyby" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    OrganizationId, OrganizationName, ParentId, CreateBy, CreateDate, ModifyDate, ModifyBy
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sas.pojo.OrganizationDictionaryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from organization_dictionary
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from organization_dictionary
+    where OrganizationId = #{organizationid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from organization_dictionary
+    where OrganizationId = #{organizationid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sas.pojo.OrganizationDictionaryExample" >
+    delete from organization_dictionary
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sas.pojo.OrganizationDictionary" >
+    insert into organization_dictionary (OrganizationId, OrganizationName, 
+      ParentId, CreateBy, CreateDate, 
+      ModifyDate, ModifyBy)
+    values (#{organizationid,jdbcType=INTEGER}, #{organizationname,jdbcType=VARCHAR}, 
+      #{parentid,jdbcType=INTEGER}, #{createby,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{modifydate,jdbcType=TIMESTAMP}, #{modifyby,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sas.pojo.OrganizationDictionary" >
+    insert into organization_dictionary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="organizationid != null" >
+        OrganizationId,
+      </if>
+      <if test="organizationname != null" >
+        OrganizationName,
+      </if>
+      <if test="parentid != null" >
+        ParentId,
+      </if>
+      <if test="createby != null" >
+        CreateBy,
+      </if>
+      <if test="createdate != null" >
+        CreateDate,
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate,
+      </if>
+      <if test="modifyby != null" >
+        ModifyBy,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="organizationid != null" >
+        #{organizationid,jdbcType=INTEGER},
+      </if>
+      <if test="organizationname != null" >
+        #{organizationname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="createby != null" >
+        #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null" >
+        #{modifyby,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sas.pojo.OrganizationDictionaryExample" resultType="java.lang.Integer" >
+    select count(*) from organization_dictionary
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update organization_dictionary
+    <set >
+      <if test="record.organizationid != null" >
+        OrganizationId = #{record.organizationid,jdbcType=INTEGER},
+      </if>
+      <if test="record.organizationname != null" >
+        OrganizationName = #{record.organizationname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentid != null" >
+        ParentId = #{record.parentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.createby != null" >
+        CreateBy = #{record.createby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdate != null" >
+        CreateDate = #{record.createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifydate != null" >
+        ModifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyby != null" >
+        ModifyBy = #{record.modifyby,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update organization_dictionary
+    set OrganizationId = #{record.organizationid,jdbcType=INTEGER},
+      OrganizationName = #{record.organizationname,jdbcType=VARCHAR},
+      ParentId = #{record.parentid,jdbcType=INTEGER},
+      CreateBy = #{record.createby,jdbcType=VARCHAR},
+      CreateDate = #{record.createdate,jdbcType=TIMESTAMP},
+      ModifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      ModifyBy = #{record.modifyby,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sas.pojo.OrganizationDictionary" >
+    update organization_dictionary
+    <set >
+      <if test="organizationname != null" >
+        OrganizationName = #{organizationname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        ParentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="createby != null" >
+        CreateBy = #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        CreateDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null" >
+        ModifyBy = #{modifyby,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OrganizationId = #{organizationid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sas.pojo.OrganizationDictionary" >
+    update organization_dictionary
+    set OrganizationName = #{organizationname,jdbcType=VARCHAR},
+      ParentId = #{parentid,jdbcType=INTEGER},
+      CreateBy = #{createby,jdbcType=VARCHAR},
+      CreateDate = #{createdate,jdbcType=TIMESTAMP},
+      ModifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      ModifyBy = #{modifyby,jdbcType=VARCHAR}
+    where OrganizationId = #{organizationid,jdbcType=INTEGER}
+  </update>
+</mapper>

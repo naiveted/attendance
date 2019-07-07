@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sas.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.sas.pojo.Role" >
+    <id column="RoleId" property="roleid" jdbcType="INTEGER" />
+    <result column="SchoolId" property="schoolid" jdbcType="INTEGER" />
+    <result column="RoleName" property="rolename" jdbcType="VARCHAR" />
+    <result column="CreateBy" property="createby" jdbcType="VARCHAR" />
+    <result column="CreateDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="ModifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="ModifyBy" property="modifyby" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RoleId, SchoolId, RoleName, CreateBy, CreateDate, ModifyDate, ModifyBy
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sas.pojo.RoleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from role
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where RoleId = #{roleid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from role
+    where RoleId = #{roleid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sas.pojo.RoleExample" >
+    delete from role
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="roleid" keyColumn="RoleId" parameterType="com.sas.pojo.Role" >
+    insert into role ( SchoolId, RoleName, 
+      CreateBy, CreateDate, ModifyDate, 
+      ModifyBy)
+    values ( #{schoolid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR}, 
+      #{createby,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}, 
+      #{modifyby,jdbcType=VARCHAR})
+  </insert>
+  <!--新增信息，并拿到新增信息的表主键信息。  
+    新增数据，得到主键的外层写法没什么特别，跟普通的insert一样。只不过里面加了selectKey-->  
+  <insert id="insertAndgetkey" parameterType="com.sas.pojo.Role">  
+    <!--selectKey  会将 SELECT LAST_INSERT_ID()的结果放入到传入的model的主键里面，  
+        keyProperty 对应的model中的主键的属性名，这里是 user 中的id，因为它跟数据库的主键对应  
+        order AFTER 表示 SELECT LAST_INSERT_ID() 在insert执行之后执行,多用与自增主键，  
+              BEFORE 表示 SELECT LAST_INSERT_ID() 在insert执行之前执行，这样的话就拿不到主键了，  
+                    这种适合那种主键不是自增的类型  
+        resultType 主键类型 -->  
+    
+    insert into role (RoleId, SchoolId, RoleName, 
+      CreateBy, CreateDate, ModifyDate, 
+      ModifyBy)
+    values (#{roleid,jdbcType=INTEGER}, #{schoolid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR}, 
+      #{createby,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}, 
+      #{modifyby,jdbcType=VARCHAR}) 
+       <selectKey keyProperty="roleid" order="AFTER" resultType="java.lang.Integer">  
+        SELECT LAST_INSERT_ID()  AS roleid
+    </selectKey> 
+  </insert>  
+  <insert id="insertSelective" parameterType="com.sas.pojo.Role" >
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleid != null" >
+        RoleId,
+      </if>
+      <if test="schoolid != null" >
+        SchoolId,
+      </if>
+      <if test="rolename != null" >
+        RoleName,
+      </if>
+      <if test="createby != null" >
+        CreateBy,
+      </if>
+      <if test="createdate != null" >
+        CreateDate,
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate,
+      </if>
+      <if test="modifyby != null" >
+        ModifyBy,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="schoolid != null" >
+        #{schoolid,jdbcType=INTEGER},
+      </if>
+      <if test="rolename != null" >
+        #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null" >
+        #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null" >
+        #{modifyby,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sas.pojo.RoleExample" resultType="java.lang.Integer" >
+    select count(*) from role
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update role
+    <set >
+      <if test="record.roleid != null" >
+        RoleId = #{record.roleid,jdbcType=INTEGER},
+      </if>
+      <if test="record.schoolid != null" >
+        SchoolId = #{record.schoolid,jdbcType=INTEGER},
+      </if>
+      <if test="record.rolename != null" >
+        RoleName = #{record.rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createby != null" >
+        CreateBy = #{record.createby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdate != null" >
+        CreateDate = #{record.createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifydate != null" >
+        ModifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyby != null" >
+        ModifyBy = #{record.modifyby,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update role
+    set RoleId = #{record.roleid,jdbcType=INTEGER},
+      SchoolId = #{record.schoolid,jdbcType=INTEGER},
+      RoleName = #{record.rolename,jdbcType=VARCHAR},
+      CreateBy = #{record.createby,jdbcType=VARCHAR},
+      CreateDate = #{record.createdate,jdbcType=TIMESTAMP},
+      ModifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      ModifyBy = #{record.modifyby,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sas.pojo.Role" >
+    update role
+    <set >
+      <if test="schoolid != null" >
+        SchoolId = #{schoolid,jdbcType=INTEGER},
+      </if>
+      <if test="rolename != null" >
+        RoleName = #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null" >
+        CreateBy = #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        CreateDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null" >
+        ModifyBy = #{modifyby,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RoleId = #{roleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sas.pojo.Role" >
+    update role
+    set SchoolId = #{schoolid,jdbcType=INTEGER},
+      RoleName = #{rolename,jdbcType=VARCHAR},
+      CreateBy = #{createby,jdbcType=VARCHAR},
+      CreateDate = #{createdate,jdbcType=TIMESTAMP},
+      ModifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      ModifyBy = #{modifyby,jdbcType=VARCHAR}
+    where RoleId = #{roleid,jdbcType=INTEGER}
+  </update>
+</mapper>

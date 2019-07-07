@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sas.mapper.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.sas.pojo.Permission" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="HTTPType" property="httptype" jdbcType="VARCHAR" />
+    <result column="IsMenu" property="ismenu" jdbcType="BIT" />
+    <result column="IsPage" property="ispage" jdbcType="BIT" />
+    <result column="Description" property="description" jdbcType="VARCHAR" />
+    <result column="Level" property="level" jdbcType="INTEGER" />
+    <result column="Position" property="position" jdbcType="INTEGER" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="ParentId" property="parentid" jdbcType="INTEGER" />
+    <result column="CreateBy" property="createby" jdbcType="VARCHAR" />
+    <result column="CreateDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="ModifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="ModifyBy" property="modifyby" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Id, Name, URL, HTTPType, IsMenu, IsPage, Description, Level, Position, path, ParentId, 
+    CreateBy, CreateDate, ModifyDate, ModifyBy
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sas.pojo.PermissionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from permission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from permission
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from permission
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sas.pojo.PermissionExample" >
+    delete from permission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sas.pojo.Permission" >
+    insert into permission (Id, Name, URL, 
+      HTTPType, IsMenu, IsPage, Description, 
+      Level, Position, path, 
+      ParentId, CreateBy, CreateDate, 
+      ModifyDate, ModifyBy)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{httptype,jdbcType=VARCHAR}, #{ismenu,jdbcType=BIT}, #{ispage,jdbcType=BIT}, #{description,jdbcType=VARCHAR}, 
+      #{level,jdbcType=INTEGER}, #{position,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, 
+      #{parentid,jdbcType=INTEGER}, #{createby,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{modifydate,jdbcType=TIMESTAMP}, #{modifyby,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sas.pojo.Permission" >
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="name != null" >
+        Name,
+      </if>
+      <if test="url != null" >
+        URL,
+      </if>
+      <if test="httptype != null" >
+        HTTPType,
+      </if>
+      <if test="ismenu != null" >
+        IsMenu,
+      </if>
+      <if test="ispage != null" >
+        IsPage,
+      </if>
+      <if test="description != null" >
+        Description,
+      </if>
+      <if test="level != null" >
+        Level,
+      </if>
+      <if test="position != null" >
+        Position,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="parentid != null" >
+        ParentId,
+      </if>
+      <if test="createby != null" >
+        CreateBy,
+      </if>
+      <if test="createdate != null" >
+        CreateDate,
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate,
+      </if>
+      <if test="modifyby != null" >
+        ModifyBy,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="httptype != null" >
+        #{httptype,jdbcType=VARCHAR},
+      </if>
+      <if test="ismenu != null" >
+        #{ismenu,jdbcType=BIT},
+      </if>
+      <if test="ispage != null" >
+        #{ispage,jdbcType=BIT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="createby != null" >
+        #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null" >
+        #{modifyby,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sas.pojo.PermissionExample" resultType="java.lang.Integer" >
+    select count(*) from permission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update permission
+    <set >
+      <if test="record.id != null" >
+        Id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        Name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        URL = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.httptype != null" >
+        HTTPType = #{record.httptype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ismenu != null" >
+        IsMenu = #{record.ismenu,jdbcType=BIT},
+      </if>
+      <if test="record.ispage != null" >
+        IsPage = #{record.ispage,jdbcType=BIT},
+      </if>
+      <if test="record.description != null" >
+        Description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null" >
+        Level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.position != null" >
+        Position = #{record.position,jdbcType=INTEGER},
+      </if>
+      <if test="record.path != null" >
+        path = #{record.path,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentid != null" >
+        ParentId = #{record.parentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.createby != null" >
+        CreateBy = #{record.createby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdate != null" >
+        CreateDate = #{record.createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifydate != null" >
+        ModifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyby != null" >
+        ModifyBy = #{record.modifyby,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update permission
+    set Id = #{record.id,jdbcType=INTEGER},
+      Name = #{record.name,jdbcType=VARCHAR},
+      URL = #{record.url,jdbcType=VARCHAR},
+      HTTPType = #{record.httptype,jdbcType=VARCHAR},
+      IsMenu = #{record.ismenu,jdbcType=BIT},
+      IsPage = #{record.ispage,jdbcType=BIT},
+      Description = #{record.description,jdbcType=VARCHAR},
+      Level = #{record.level,jdbcType=INTEGER},
+      Position = #{record.position,jdbcType=INTEGER},
+      path = #{record.path,jdbcType=VARCHAR},
+      ParentId = #{record.parentid,jdbcType=INTEGER},
+      CreateBy = #{record.createby,jdbcType=VARCHAR},
+      CreateDate = #{record.createdate,jdbcType=TIMESTAMP},
+      ModifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      ModifyBy = #{record.modifyby,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sas.pojo.Permission" >
+    update permission
+    <set >
+      <if test="name != null" >
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="httptype != null" >
+        HTTPType = #{httptype,jdbcType=VARCHAR},
+      </if>
+      <if test="ismenu != null" >
+        IsMenu = #{ismenu,jdbcType=BIT},
+      </if>
+      <if test="ispage != null" >
+        IsPage = #{ispage,jdbcType=BIT},
+      </if>
+      <if test="description != null" >
+        Description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        Level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="position != null" >
+        Position = #{position,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        ParentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="createby != null" >
+        CreateBy = #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        CreateDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null" >
+        ModifyBy = #{modifyby,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sas.pojo.Permission" >
+    update permission
+    set Name = #{name,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      HTTPType = #{httptype,jdbcType=VARCHAR},
+      IsMenu = #{ismenu,jdbcType=BIT},
+      IsPage = #{ispage,jdbcType=BIT},
+      Description = #{description,jdbcType=VARCHAR},
+      Level = #{level,jdbcType=INTEGER},
+      Position = #{position,jdbcType=INTEGER},
+      path = #{path,jdbcType=VARCHAR},
+      ParentId = #{parentid,jdbcType=INTEGER},
+      CreateBy = #{createby,jdbcType=VARCHAR},
+      CreateDate = #{createdate,jdbcType=TIMESTAMP},
+      ModifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      ModifyBy = #{modifyby,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

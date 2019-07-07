@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sas.mapper.AbsenteeismMapper" >
+  <resultMap id="BaseResultMap" type="com.sas.pojo.Absenteeism" >
+    <id column="AId" property="aid" jdbcType="INTEGER" />
+    <result column="CourseName" property="coursename" jdbcType="VARCHAR" />
+    <result column="CourseId" property="courseid" jdbcType="INTEGER" />
+    <result column="AtteanceNum" property="atteancenum" jdbcType="INTEGER" />
+    <result column="LeaveNum" property="leavenum" jdbcType="INTEGER" />
+    <result column="AbsenteeismNum" property="absenteeismnum" jdbcType="INTEGER" />
+    <result column="AbsenteeismList" property="absenteeismlist" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    AId, CourseName, CourseId, AtteanceNum, LeaveNum, AbsenteeismNum, AbsenteeismList, 
+    CreateTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sas.pojo.AbsenteeismExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from absenteeism
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from absenteeism
+    where AId = #{aid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from absenteeism
+    where AId = #{aid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sas.pojo.AbsenteeismExample" >
+    delete from absenteeism
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sas.pojo.Absenteeism" >
+    insert into absenteeism (AId, CourseName, CourseId, 
+      AtteanceNum, LeaveNum, AbsenteeismNum, 
+      AbsenteeismList, CreateTime)
+    values (#{aid,jdbcType=INTEGER}, #{coursename,jdbcType=VARCHAR}, #{courseid,jdbcType=INTEGER}, 
+      #{atteancenum,jdbcType=INTEGER}, #{leavenum,jdbcType=INTEGER}, #{absenteeismnum,jdbcType=INTEGER}, 
+      #{absenteeismlist,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sas.pojo.Absenteeism" >
+    insert into absenteeism
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aid != null" >
+        AId,
+      </if>
+      <if test="coursename != null" >
+        CourseName,
+      </if>
+      <if test="courseid != null" >
+        CourseId,
+      </if>
+      <if test="atteancenum != null" >
+        AtteanceNum,
+      </if>
+      <if test="leavenum != null" >
+        LeaveNum,
+      </if>
+      <if test="absenteeismnum != null" >
+        AbsenteeismNum,
+      </if>
+      <if test="absenteeismlist != null" >
+        AbsenteeismList,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aid != null" >
+        #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="coursename != null" >
+        #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        #{courseid,jdbcType=INTEGER},
+      </if>
+      <if test="atteancenum != null" >
+        #{atteancenum,jdbcType=INTEGER},
+      </if>
+      <if test="leavenum != null" >
+        #{leavenum,jdbcType=INTEGER},
+      </if>
+      <if test="absenteeismnum != null" >
+        #{absenteeismnum,jdbcType=INTEGER},
+      </if>
+      <if test="absenteeismlist != null" >
+        #{absenteeismlist,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sas.pojo.AbsenteeismExample" resultType="java.lang.Integer" >
+    select count(*) from absenteeism
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update absenteeism
+    <set >
+      <if test="record.aid != null" >
+        AId = #{record.aid,jdbcType=INTEGER},
+      </if>
+      <if test="record.coursename != null" >
+        CourseName = #{record.coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseid != null" >
+        CourseId = #{record.courseid,jdbcType=INTEGER},
+      </if>
+      <if test="record.atteancenum != null" >
+        AtteanceNum = #{record.atteancenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.leavenum != null" >
+        LeaveNum = #{record.leavenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.absenteeismnum != null" >
+        AbsenteeismNum = #{record.absenteeismnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.absenteeismlist != null" >
+        AbsenteeismList = #{record.absenteeismlist,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        CreateTime = #{record.createtime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update absenteeism
+    set AId = #{record.aid,jdbcType=INTEGER},
+      CourseName = #{record.coursename,jdbcType=VARCHAR},
+      CourseId = #{record.courseid,jdbcType=INTEGER},
+      AtteanceNum = #{record.atteancenum,jdbcType=INTEGER},
+      LeaveNum = #{record.leavenum,jdbcType=INTEGER},
+      AbsenteeismNum = #{record.absenteeismnum,jdbcType=INTEGER},
+      AbsenteeismList = #{record.absenteeismlist,jdbcType=VARCHAR},
+      CreateTime = #{record.createtime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sas.pojo.Absenteeism" >
+    update absenteeism
+    <set >
+      <if test="coursename != null" >
+        CourseName = #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        CourseId = #{courseid,jdbcType=INTEGER},
+      </if>
+      <if test="atteancenum != null" >
+        AtteanceNum = #{atteancenum,jdbcType=INTEGER},
+      </if>
+      <if test="leavenum != null" >
+        LeaveNum = #{leavenum,jdbcType=INTEGER},
+      </if>
+      <if test="absenteeismnum != null" >
+        AbsenteeismNum = #{absenteeismnum,jdbcType=INTEGER},
+      </if>
+      <if test="absenteeismlist != null" >
+        AbsenteeismList = #{absenteeismlist,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=DATE},
+      </if>
+    </set>
+    where AId = #{aid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sas.pojo.Absenteeism" >
+    update absenteeism
+    set CourseName = #{coursename,jdbcType=VARCHAR},
+      CourseId = #{courseid,jdbcType=INTEGER},
+      AtteanceNum = #{atteancenum,jdbcType=INTEGER},
+      LeaveNum = #{leavenum,jdbcType=INTEGER},
+      AbsenteeismNum = #{absenteeismnum,jdbcType=INTEGER},
+      AbsenteeismList = #{absenteeismlist,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=DATE}
+    where AId = #{aid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sas.mapper.ClassRoomMapper" >
+  <resultMap id="BaseResultMap" type="com.sas.pojo.ClassRoom" >
+    <id column="ClassRoomId" property="classroomid" jdbcType="INTEGER" />
+    <result column="OrganizationId" property="organizationid" jdbcType="INTEGER" />
+    <result column="ClassRoomName" property="classroomname" jdbcType="VARCHAR" />
+    <result column="ClassRoomAddress" property="classroomaddress" jdbcType="VARCHAR" />
+    <result column="Galleryful" property="galleryful" jdbcType="INTEGER" />
+    <result column="IsUse" property="isuse" jdbcType="INTEGER" />
+    <result column="UseStratTime" property="usestrattime" jdbcType="DATE" />
+    <result column="UseEndTime" property="useendtime" jdbcType="DATE" />
+    <result column="CreateBy" property="createby" jdbcType="VARCHAR" />
+    <result column="CreateDate" property="createdate" jdbcType="DATE" />
+    <result column="ModifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="ModifyBy" property="modifyby" jdbcType="VARCHAR" />
+    <result column="Longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="Latitude" property="latitude" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ClassRoomId, OrganizationId, ClassRoomName, ClassRoomAddress, Galleryful, IsUse, 
+    UseStratTime, UseEndTime, CreateBy, CreateDate, ModifyDate, ModifyBy, Longitude, 
+    Latitude
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sas.pojo.ClassRoomExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from class_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from class_room
+    where ClassRoomId = #{classroomid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from class_room
+    where ClassRoomId = #{classroomid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sas.pojo.ClassRoomExample" >
+    delete from class_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sas.pojo.ClassRoom" >
+    insert into class_room (ClassRoomId, OrganizationId, ClassRoomName, 
+      ClassRoomAddress, Galleryful, IsUse, 
+      UseStratTime, UseEndTime, CreateBy, 
+      CreateDate, ModifyDate, ModifyBy, 
+      Longitude, Latitude)
+    values (#{classroomid,jdbcType=INTEGER}, #{organizationid,jdbcType=INTEGER}, #{classroomname,jdbcType=VARCHAR}, 
+      #{classroomaddress,jdbcType=VARCHAR}, #{galleryful,jdbcType=INTEGER}, #{isuse,jdbcType=INTEGER}, 
+      #{usestrattime,jdbcType=DATE}, #{useendtime,jdbcType=DATE}, #{createby,jdbcType=VARCHAR}, 
+      #{createdate,jdbcType=DATE}, #{modifydate,jdbcType=TIMESTAMP}, #{modifyby,jdbcType=VARCHAR}, 
+      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sas.pojo.ClassRoom" >
+    insert into class_room
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classroomid != null" >
+        ClassRoomId,
+      </if>
+      <if test="organizationid != null" >
+        OrganizationId,
+      </if>
+      <if test="classroomname != null" >
+        ClassRoomName,
+      </if>
+      <if test="classroomaddress != null" >
+        ClassRoomAddress,
+      </if>
+      <if test="galleryful != null" >
+        Galleryful,
+      </if>
+      <if test="isuse != null" >
+        IsUse,
+      </if>
+      <if test="usestrattime != null" >
+        UseStratTime,
+      </if>
+      <if test="useendtime != null" >
+        UseEndTime,
+      </if>
+      <if test="createby != null" >
+        CreateBy,
+      </if>
+      <if test="createdate != null" >
+        CreateDate,
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate,
+      </if>
+      <if test="modifyby != null" >
+        ModifyBy,
+      </if>
+      <if test="longitude != null" >
+        Longitude,
+      </if>
+      <if test="latitude != null" >
+        Latitude,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classroomid != null" >
+        #{classroomid,jdbcType=INTEGER},
+      </if>
+      <if test="organizationid != null" >
+        #{organizationid,jdbcType=INTEGER},
+      </if>
+      <if test="classroomname != null" >
+        #{classroomname,jdbcType=VARCHAR},
+      </if>
+      <if test="classroomaddress != null" >
+        #{classroomaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="galleryful != null" >
+        #{galleryful,jdbcType=INTEGER},
+      </if>
+      <if test="isuse != null" >
+        #{isuse,jdbcType=INTEGER},
+      </if>
+      <if test="usestrattime != null" >
+        #{usestrattime,jdbcType=DATE},
+      </if>
+      <if test="useendtime != null" >
+        #{useendtime,jdbcType=DATE},
+      </if>
+      <if test="createby != null" >
+        #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=DATE},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null" >
+        #{modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sas.pojo.ClassRoomExample" resultType="java.lang.Integer" >
+    select count(*) from class_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update class_room
+    <set >
+      <if test="record.classroomid != null" >
+        ClassRoomId = #{record.classroomid,jdbcType=INTEGER},
+      </if>
+      <if test="record.organizationid != null" >
+        OrganizationId = #{record.organizationid,jdbcType=INTEGER},
+      </if>
+      <if test="record.classroomname != null" >
+        ClassRoomName = #{record.classroomname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classroomaddress != null" >
+        ClassRoomAddress = #{record.classroomaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.galleryful != null" >
+        Galleryful = #{record.galleryful,jdbcType=INTEGER},
+      </if>
+      <if test="record.isuse != null" >
+        IsUse = #{record.isuse,jdbcType=INTEGER},
+      </if>
+      <if test="record.usestrattime != null" >
+        UseStratTime = #{record.usestrattime,jdbcType=DATE},
+      </if>
+      <if test="record.useendtime != null" >
+        UseEndTime = #{record.useendtime,jdbcType=DATE},
+      </if>
+      <if test="record.createby != null" >
+        CreateBy = #{record.createby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdate != null" >
+        CreateDate = #{record.createdate,jdbcType=DATE},
+      </if>
+      <if test="record.modifydate != null" >
+        ModifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyby != null" >
+        ModifyBy = #{record.modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null" >
+        Longitude = #{record.longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latitude != null" >
+        Latitude = #{record.latitude,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update class_room
+    set ClassRoomId = #{record.classroomid,jdbcType=INTEGER},
+      OrganizationId = #{record.organizationid,jdbcType=INTEGER},
+      ClassRoomName = #{record.classroomname,jdbcType=VARCHAR},
+      ClassRoomAddress = #{record.classroomaddress,jdbcType=VARCHAR},
+      Galleryful = #{record.galleryful,jdbcType=INTEGER},
+      IsUse = #{record.isuse,jdbcType=INTEGER},
+      UseStratTime = #{record.usestrattime,jdbcType=DATE},
+      UseEndTime = #{record.useendtime,jdbcType=DATE},
+      CreateBy = #{record.createby,jdbcType=VARCHAR},
+      CreateDate = #{record.createdate,jdbcType=DATE},
+      ModifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      ModifyBy = #{record.modifyby,jdbcType=VARCHAR},
+      Longitude = #{record.longitude,jdbcType=VARCHAR},
+      Latitude = #{record.latitude,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sas.pojo.ClassRoom" >
+    update class_room
+    <set >
+      <if test="organizationid != null" >
+        OrganizationId = #{organizationid,jdbcType=INTEGER},
+      </if>
+      <if test="classroomname != null" >
+        ClassRoomName = #{classroomname,jdbcType=VARCHAR},
+      </if>
+      <if test="classroomaddress != null" >
+        ClassRoomAddress = #{classroomaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="galleryful != null" >
+        Galleryful = #{galleryful,jdbcType=INTEGER},
+      </if>
+      <if test="isuse != null" >
+        IsUse = #{isuse,jdbcType=INTEGER},
+      </if>
+      <if test="usestrattime != null" >
+        UseStratTime = #{usestrattime,jdbcType=DATE},
+      </if>
+      <if test="useendtime != null" >
+        UseEndTime = #{useendtime,jdbcType=DATE},
+      </if>
+      <if test="createby != null" >
+        CreateBy = #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        CreateDate = #{createdate,jdbcType=DATE},
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null" >
+        ModifyBy = #{modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        Longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        Latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ClassRoomId = #{classroomid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sas.pojo.ClassRoom" >
+    update class_room
+    set OrganizationId = #{organizationid,jdbcType=INTEGER},
+      ClassRoomName = #{classroomname,jdbcType=VARCHAR},
+      ClassRoomAddress = #{classroomaddress,jdbcType=VARCHAR},
+      Galleryful = #{galleryful,jdbcType=INTEGER},
+      IsUse = #{isuse,jdbcType=INTEGER},
+      UseStratTime = #{usestrattime,jdbcType=DATE},
+      UseEndTime = #{useendtime,jdbcType=DATE},
+      CreateBy = #{createby,jdbcType=VARCHAR},
+      CreateDate = #{createdate,jdbcType=DATE},
+      ModifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      ModifyBy = #{modifyby,jdbcType=VARCHAR},
+      Longitude = #{longitude,jdbcType=VARCHAR},
+      Latitude = #{latitude,jdbcType=VARCHAR}
+    where ClassRoomId = #{classroomid,jdbcType=INTEGER}
+  </update>
+</mapper>

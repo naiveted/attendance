@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sas.mapper.CourseMapper" >
+  <resultMap id="BaseResultMap" type="com.sas.pojo.Course" >
+    <id column="CourseId" property="courseid" jdbcType="INTEGER" />
+    <result column="OrganizationId" property="organizationid" jdbcType="INTEGER" />
+    <result column="ClassRoomSize" property="classroomsize" jdbcType="INTEGER" />
+    <result column="ClassRoomName" property="classroomname" jdbcType="VARCHAR" />
+    <result column="ClassRoomId" property="classroomid" jdbcType="INTEGER" />
+    <result column="TeacherId" property="teacherid" jdbcType="INTEGER" />
+    <result column="CourseName" property="coursename" jdbcType="VARCHAR" />
+    <result column="SchoolTime" property="schooltime" jdbcType="VARCHAR" />
+    <result column="StartTime" property="starttime" jdbcType="DATE" />
+    <result column="EndTime" property="endtime" jdbcType="DATE" />
+    <result column="StudentNum" property="studentnum" jdbcType="INTEGER" />
+    <result column="TeacherName" property="teachername" jdbcType="VARCHAR" />
+    <result column="CreateBy" property="createby" jdbcType="VARCHAR" />
+    <result column="CreateDate" property="createdate" jdbcType="DATE" />
+    <result column="ModifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="ModifyBy" property="modifyby" jdbcType="VARCHAR" />
+    <result column="CourseAdminId" property="courseadminid" jdbcType="INTEGER" />
+    <result column="StudentIdList" property="studentidlist" jdbcType="VARCHAR" />
+    <result column="DayOfWeek" property="dayofweek" jdbcType="VARCHAR" />
+    <result column="IsAttendance" property="isattendance" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CourseId, OrganizationId, ClassRoomSize, ClassRoomName, ClassRoomId, TeacherId, CourseName, 
+    SchoolTime, StartTime, EndTime, StudentNum, TeacherName, CreateBy, CreateDate, ModifyDate, 
+    ModifyBy, CourseAdminId, StudentIdList, DayOfWeek, IsAttendance
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sas.pojo.CourseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from course
+    where CourseId = #{courseid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from course
+    where CourseId = #{courseid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sas.pojo.CourseExample" >
+    delete from course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sas.pojo.Course" >
+    insert into course (CourseId, OrganizationId, ClassRoomSize, 
+      ClassRoomName, ClassRoomId, TeacherId, 
+      CourseName, SchoolTime, StartTime, 
+      EndTime, StudentNum, TeacherName, 
+      CreateBy, CreateDate, ModifyDate, 
+      ModifyBy, CourseAdminId, StudentIdList, 
+      DayOfWeek, IsAttendance)
+    values (#{courseid,jdbcType=INTEGER}, #{organizationid,jdbcType=INTEGER}, #{classroomsize,jdbcType=INTEGER}, 
+      #{classroomname,jdbcType=VARCHAR}, #{classroomid,jdbcType=INTEGER}, #{teacherid,jdbcType=INTEGER}, 
+      #{coursename,jdbcType=VARCHAR}, #{schooltime,jdbcType=VARCHAR}, #{starttime,jdbcType=DATE}, 
+      #{endtime,jdbcType=DATE}, #{studentnum,jdbcType=INTEGER}, #{teachername,jdbcType=VARCHAR}, 
+      #{createby,jdbcType=VARCHAR}, #{createdate,jdbcType=DATE}, #{modifydate,jdbcType=TIMESTAMP}, 
+      #{modifyby,jdbcType=VARCHAR}, #{courseadminid,jdbcType=INTEGER}, #{studentidlist,jdbcType=VARCHAR}, 
+      #{dayofweek,jdbcType=VARCHAR}, #{isattendance,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sas.pojo.Course" >
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="courseid != null" >
+        CourseId,
+      </if>
+      <if test="organizationid != null" >
+        OrganizationId,
+      </if>
+      <if test="classroomsize != null" >
+        ClassRoomSize,
+      </if>
+      <if test="classroomname != null" >
+        ClassRoomName,
+      </if>
+      <if test="classroomid != null" >
+        ClassRoomId,
+      </if>
+      <if test="teacherid != null" >
+        TeacherId,
+      </if>
+      <if test="coursename != null" >
+        CourseName,
+      </if>
+      <if test="schooltime != null" >
+        SchoolTime,
+      </if>
+      <if test="starttime != null" >
+        StartTime,
+      </if>
+      <if test="endtime != null" >
+        EndTime,
+      </if>
+      <if test="studentnum != null" >
+        StudentNum,
+      </if>
+      <if test="teachername != null" >
+        TeacherName,
+      </if>
+      <if test="createby != null" >
+        CreateBy,
+      </if>
+      <if test="createdate != null" >
+        CreateDate,
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate,
+      </if>
+      <if test="modifyby != null" >
+        ModifyBy,
+      </if>
+      <if test="courseadminid != null" >
+        CourseAdminId,
+      </if>
+      <if test="studentidlist != null" >
+        StudentIdList,
+      </if>
+      <if test="dayofweek != null" >
+        DayOfWeek,
+      </if>
+      <if test="isattendance != null" >
+        IsAttendance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="courseid != null" >
+        #{courseid,jdbcType=INTEGER},
+      </if>
+      <if test="organizationid != null" >
+        #{organizationid,jdbcType=INTEGER},
+      </if>
+      <if test="classroomsize != null" >
+        #{classroomsize,jdbcType=INTEGER},
+      </if>
+      <if test="classroomname != null" >
+        #{classroomname,jdbcType=VARCHAR},
+      </if>
+      <if test="classroomid != null" >
+        #{classroomid,jdbcType=INTEGER},
+      </if>
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=INTEGER},
+      </if>
+      <if test="coursename != null" >
+        #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="schooltime != null" >
+        #{schooltime,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=DATE},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=DATE},
+      </if>
+      <if test="studentnum != null" >
+        #{studentnum,jdbcType=INTEGER},
+      </if>
+      <if test="teachername != null" >
+        #{teachername,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null" >
+        #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=DATE},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null" >
+        #{modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="courseadminid != null" >
+        #{courseadminid,jdbcType=INTEGER},
+      </if>
+      <if test="studentidlist != null" >
+        #{studentidlist,jdbcType=VARCHAR},
+      </if>
+      <if test="dayofweek != null" >
+        #{dayofweek,jdbcType=VARCHAR},
+      </if>
+      <if test="isattendance != null" >
+        #{isattendance,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sas.pojo.CourseExample" resultType="java.lang.Integer" >
+    select count(*) from course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update course
+    <set >
+      <if test="record.courseid != null" >
+        CourseId = #{record.courseid,jdbcType=INTEGER},
+      </if>
+      <if test="record.organizationid != null" >
+        OrganizationId = #{record.organizationid,jdbcType=INTEGER},
+      </if>
+      <if test="record.classroomsize != null" >
+        ClassRoomSize = #{record.classroomsize,jdbcType=INTEGER},
+      </if>
+      <if test="record.classroomname != null" >
+        ClassRoomName = #{record.classroomname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classroomid != null" >
+        ClassRoomId = #{record.classroomid,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacherid != null" >
+        TeacherId = #{record.teacherid,jdbcType=INTEGER},
+      </if>
+      <if test="record.coursename != null" >
+        CourseName = #{record.coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schooltime != null" >
+        SchoolTime = #{record.schooltime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.starttime != null" >
+        StartTime = #{record.starttime,jdbcType=DATE},
+      </if>
+      <if test="record.endtime != null" >
+        EndTime = #{record.endtime,jdbcType=DATE},
+      </if>
+      <if test="record.studentnum != null" >
+        StudentNum = #{record.studentnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.teachername != null" >
+        TeacherName = #{record.teachername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createby != null" >
+        CreateBy = #{record.createby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdate != null" >
+        CreateDate = #{record.createdate,jdbcType=DATE},
+      </if>
+      <if test="record.modifydate != null" >
+        ModifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyby != null" >
+        ModifyBy = #{record.modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseadminid != null" >
+        CourseAdminId = #{record.courseadminid,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentidlist != null" >
+        StudentIdList = #{record.studentidlist,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dayofweek != null" >
+        DayOfWeek = #{record.dayofweek,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isattendance != null" >
+        IsAttendance = #{record.isattendance,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update course
+    set CourseId = #{record.courseid,jdbcType=INTEGER},
+      OrganizationId = #{record.organizationid,jdbcType=INTEGER},
+      ClassRoomSize = #{record.classroomsize,jdbcType=INTEGER},
+      ClassRoomName = #{record.classroomname,jdbcType=VARCHAR},
+      ClassRoomId = #{record.classroomid,jdbcType=INTEGER},
+      TeacherId = #{record.teacherid,jdbcType=INTEGER},
+      CourseName = #{record.coursename,jdbcType=VARCHAR},
+      SchoolTime = #{record.schooltime,jdbcType=VARCHAR},
+      StartTime = #{record.starttime,jdbcType=DATE},
+      EndTime = #{record.endtime,jdbcType=DATE},
+      StudentNum = #{record.studentnum,jdbcType=INTEGER},
+      TeacherName = #{record.teachername,jdbcType=VARCHAR},
+      CreateBy = #{record.createby,jdbcType=VARCHAR},
+      CreateDate = #{record.createdate,jdbcType=DATE},
+      ModifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      ModifyBy = #{record.modifyby,jdbcType=VARCHAR},
+      CourseAdminId = #{record.courseadminid,jdbcType=INTEGER},
+      StudentIdList = #{record.studentidlist,jdbcType=VARCHAR},
+      DayOfWeek = #{record.dayofweek,jdbcType=VARCHAR},
+      IsAttendance = #{record.isattendance,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sas.pojo.Course" >
+    update course
+    <set >
+      <if test="organizationid != null" >
+        OrganizationId = #{organizationid,jdbcType=INTEGER},
+      </if>
+      <if test="classroomsize != null" >
+        ClassRoomSize = #{classroomsize,jdbcType=INTEGER},
+      </if>
+      <if test="classroomname != null" >
+        ClassRoomName = #{classroomname,jdbcType=VARCHAR},
+      </if>
+      <if test="classroomid != null" >
+        ClassRoomId = #{classroomid,jdbcType=INTEGER},
+      </if>
+      <if test="teacherid != null" >
+        TeacherId = #{teacherid,jdbcType=INTEGER},
+      </if>
+      <if test="coursename != null" >
+        CourseName = #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="schooltime != null" >
+        SchoolTime = #{schooltime,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        StartTime = #{starttime,jdbcType=DATE},
+      </if>
+      <if test="endtime != null" >
+        EndTime = #{endtime,jdbcType=DATE},
+      </if>
+      <if test="studentnum != null" >
+        StudentNum = #{studentnum,jdbcType=INTEGER},
+      </if>
+      <if test="teachername != null" >
+        TeacherName = #{teachername,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null" >
+        CreateBy = #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        CreateDate = #{createdate,jdbcType=DATE},
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null" >
+        ModifyBy = #{modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="courseadminid != null" >
+        CourseAdminId = #{courseadminid,jdbcType=INTEGER},
+      </if>
+      <if test="studentidlist != null" >
+        StudentIdList = #{studentidlist,jdbcType=VARCHAR},
+      </if>
+      <if test="dayofweek != null" >
+        DayOfWeek = #{dayofweek,jdbcType=VARCHAR},
+      </if>
+      <if test="isattendance != null" >
+        IsAttendance = #{isattendance,jdbcType=INTEGER},
+      </if>
+    </set>
+    where CourseId = #{courseid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sas.pojo.Course" >
+    update course
+    set OrganizationId = #{organizationid,jdbcType=INTEGER},
+      ClassRoomSize = #{classroomsize,jdbcType=INTEGER},
+      ClassRoomName = #{classroomname,jdbcType=VARCHAR},
+      ClassRoomId = #{classroomid,jdbcType=INTEGER},
+      TeacherId = #{teacherid,jdbcType=INTEGER},
+      CourseName = #{coursename,jdbcType=VARCHAR},
+      SchoolTime = #{schooltime,jdbcType=VARCHAR},
+      StartTime = #{starttime,jdbcType=DATE},
+      EndTime = #{endtime,jdbcType=DATE},
+      StudentNum = #{studentnum,jdbcType=INTEGER},
+      TeacherName = #{teachername,jdbcType=VARCHAR},
+      CreateBy = #{createby,jdbcType=VARCHAR},
+      CreateDate = #{createdate,jdbcType=DATE},
+      ModifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      ModifyBy = #{modifyby,jdbcType=VARCHAR},
+      CourseAdminId = #{courseadminid,jdbcType=INTEGER},
+      StudentIdList = #{studentidlist,jdbcType=VARCHAR},
+      DayOfWeek = #{dayofweek,jdbcType=VARCHAR},
+      IsAttendance = #{isattendance,jdbcType=INTEGER}
+    where CourseId = #{courseid,jdbcType=INTEGER}
+  </update>
+</mapper>

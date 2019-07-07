@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sas.mapper.PersonnelMapper" >
+  <resultMap id="BaseResultMap" type="com.sas.pojo.Personnel" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="RoleId" property="roleid" jdbcType="INTEGER" />
+    <result column="OrganizationId" property="organizationid" jdbcType="INTEGER" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="Sex" property="sex" jdbcType="INTEGER" />
+    <result column="Age" property="age" jdbcType="INTEGER" />
+    <result column="JobNum" property="jobnum" jdbcType="INTEGER" />
+    <result column="PeopleNum" property="peoplenum" jdbcType="VARCHAR" />
+    <result column="EntryTime" property="entrytime" jdbcType="DATE" />
+    <result column="CreateBy" property="createby" jdbcType="VARCHAR" />
+    <result column="CreateDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="ModifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="ModifyBy" property="modifyby" jdbcType="VARCHAR" />
+    <result column="Email" property="email" jdbcType="VARCHAR" />
+    <result column="Image" property="image" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Id, RoleId, OrganizationId, Name, Sex, Age, JobNum, PeopleNum, EntryTime, CreateBy, 
+    CreateDate, ModifyDate, ModifyBy, Email, Image
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sas.pojo.PersonnelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from personnel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from personnel
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from personnel
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sas.pojo.PersonnelExample" >
+    delete from personnel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="Id" parameterType="com.sas.pojo.Personnel" >
+    insert into personnel ( RoleId, OrganizationId, 
+      Name, Sex, Age, JobNum, 
+      PeopleNum, EntryTime, CreateBy, 
+      CreateDate, ModifyDate, ModifyBy, 
+      Email, Image)
+    values ( #{roleid,jdbcType=INTEGER}, #{organizationid,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, #{jobnum,jdbcType=INTEGER}, 
+      #{peoplenum,jdbcType=VARCHAR}, #{entrytime,jdbcType=DATE}, #{createby,jdbcType=VARCHAR}, 
+      #{createdate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}, #{modifyby,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sas.pojo.Personnel" >
+    insert into personnel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="roleid != null" >
+        RoleId,
+      </if>
+      <if test="organizationid != null" >
+        OrganizationId,
+      </if>
+      <if test="name != null" >
+        Name,
+      </if>
+      <if test="sex != null" >
+        Sex,
+      </if>
+      <if test="age != null" >
+        Age,
+      </if>
+      <if test="jobnum != null" >
+        JobNum,
+      </if>
+      <if test="peoplenum != null" >
+        PeopleNum,
+      </if>
+      <if test="entrytime != null" >
+        EntryTime,
+      </if>
+      <if test="createby != null" >
+        CreateBy,
+      </if>
+      <if test="createdate != null" >
+        CreateDate,
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate,
+      </if>
+      <if test="modifyby != null" >
+        ModifyBy,
+      </if>
+      <if test="email != null" >
+        Email,
+      </if>
+      <if test="image != null" >
+        Image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="organizationid != null" >
+        #{organizationid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="jobnum != null" >
+        #{jobnum,jdbcType=INTEGER},
+      </if>
+      <if test="peoplenum != null" >
+        #{peoplenum,jdbcType=VARCHAR},
+      </if>
+      <if test="entrytime != null" >
+        #{entrytime,jdbcType=DATE},
+      </if>
+      <if test="createby != null" >
+        #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null" >
+        #{modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sas.pojo.PersonnelExample" resultType="java.lang.Integer" >
+    select count(*) from personnel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update personnel
+    <set >
+      <if test="record.id != null" >
+        Id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleid != null" >
+        RoleId = #{record.roleid,jdbcType=INTEGER},
+      </if>
+      <if test="record.organizationid != null" >
+        OrganizationId = #{record.organizationid,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        Name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        Sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.age != null" >
+        Age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobnum != null" >
+        JobNum = #{record.jobnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.peoplenum != null" >
+        PeopleNum = #{record.peoplenum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.entrytime != null" >
+        EntryTime = #{record.entrytime,jdbcType=DATE},
+      </if>
+      <if test="record.createby != null" >
+        CreateBy = #{record.createby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdate != null" >
+        CreateDate = #{record.createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifydate != null" >
+        ModifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyby != null" >
+        ModifyBy = #{record.modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        Email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image != null" >
+        Image = #{record.image,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update personnel
+    set Id = #{record.id,jdbcType=INTEGER},
+      RoleId = #{record.roleid,jdbcType=INTEGER},
+      OrganizationId = #{record.organizationid,jdbcType=INTEGER},
+      Name = #{record.name,jdbcType=VARCHAR},
+      Sex = #{record.sex,jdbcType=INTEGER},
+      Age = #{record.age,jdbcType=INTEGER},
+      JobNum = #{record.jobnum,jdbcType=INTEGER},
+      PeopleNum = #{record.peoplenum,jdbcType=VARCHAR},
+      EntryTime = #{record.entrytime,jdbcType=DATE},
+      CreateBy = #{record.createby,jdbcType=VARCHAR},
+      CreateDate = #{record.createdate,jdbcType=TIMESTAMP},
+      ModifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      ModifyBy = #{record.modifyby,jdbcType=VARCHAR},
+      Email = #{record.email,jdbcType=VARCHAR},
+      Image = #{record.image,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sas.pojo.Personnel" >
+    update personnel
+    <set >
+      <if test="roleid != null" >
+        RoleId = #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="organizationid != null" >
+        OrganizationId = #{organizationid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        Sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="age != null" >
+        Age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="jobnum != null" >
+        JobNum = #{jobnum,jdbcType=INTEGER},
+      </if>
+      <if test="peoplenum != null" >
+        PeopleNum = #{peoplenum,jdbcType=VARCHAR},
+      </if>
+      <if test="entrytime != null" >
+        EntryTime = #{entrytime,jdbcType=DATE},
+      </if>
+      <if test="createby != null" >
+        CreateBy = #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        CreateDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null" >
+        ModifyBy = #{modifyby,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        Email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        Image = #{image,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sas.pojo.Personnel" >
+    update personnel
+    set RoleId = #{roleid,jdbcType=INTEGER},
+      OrganizationId = #{organizationid,jdbcType=INTEGER},
+      Name = #{name,jdbcType=VARCHAR},
+      Sex = #{sex,jdbcType=INTEGER},
+      Age = #{age,jdbcType=INTEGER},
+      JobNum = #{jobnum,jdbcType=INTEGER},
+      PeopleNum = #{peoplenum,jdbcType=VARCHAR},
+      EntryTime = #{entrytime,jdbcType=DATE},
+      CreateBy = #{createby,jdbcType=VARCHAR},
+      CreateDate = #{createdate,jdbcType=TIMESTAMP},
+      ModifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      ModifyBy = #{modifyby,jdbcType=VARCHAR},
+      Email = #{email,jdbcType=VARCHAR},
+      Image = #{image,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

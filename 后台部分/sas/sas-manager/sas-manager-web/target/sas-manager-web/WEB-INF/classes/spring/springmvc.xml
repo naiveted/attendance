@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:component-scan base-package="com.sas.controller" />
+	<context:component-scan base-package="com.sas.proscenium.controller" />
+	<mvc:annotation-driven />
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<!-- 资源映射 -->
+	<mvc:resources location="/css/" mapping="/css/**"/>
+	<mvc:resources location="/font/" mapping="/font/**"/>
+	<mvc:resources location="/js/" mapping="/js/**"/>
+	<mvc:resources location="/images/" mapping="/images/**"/>
+	<mvc:resources location="/style/" mapping="/style/**"/>
+	<mvc:resources location="/layui/" mapping="/layui/**"/>
+	<mvc:resources location="/lay/" mapping="/lay/**"/>
+	<mvc:resources location="/face_files/" mapping="/face_files/**"/>
+	<!-- <mvc:resources location="/WEB-INF/" mapping="/*.html"/> -->
+	
+	<!-- 定义文件上传解析器 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设定默认编码 -->
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<!-- 设定文件上传的最大值5MB，5*1024*1024 -->
+		<property name="maxUploadSize" value="5242880"></property>
+	</bean>
+	<mvc:interceptors>
+		<mvc:interceptor>
+		<!-- 排除拦截 -->
+			<mvc:mapping path="/**/*"/>
+			    <mvc:exclude-mapping path="/**/*login*"/>
+			    <mvc:exclude-mapping path="/**/*index*"/>
+			    <mvc:exclude-mapping path="/css/**"/>
+			    <mvc:exclude-mapping path="/js/**"/>
+			   <!--  <mvc:exclude-mapping path="/images/**"/> -->
+			    <mvc:exclude-mapping path="/classes/**"/>
+			<bean class="com.sas.intercepter.LoginInterceotor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+</beans>
